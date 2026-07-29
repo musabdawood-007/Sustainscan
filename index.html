@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SustainScan Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="font-poppins bg-gray-900 text-white">
+
+    <!-- WELCOME ANIMATION -->
+    <div id="introAnimation" class="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center">
+        <div class="rainbow-text text-3xl md:text-6xl font-extrabold tracking-widest mb-4">SUSTAINSCAN</div>
+        <div class="text-sm text-gray-400 uppercase tracking-[0.3em] animate-pulse">Initializing Software...</div>
+    </div>
+
+    <!-- LOGOUT ANIMATION -->
+    <div id="logoutAnimation" class="fixed inset-0 z-[60] bg-white pointer-events-none opacity-0 transition-opacity duration-700"></div>
+
+    <!-- BACKGROUND IMAGE LAYER -->
+    <div class="fixed inset-0 z-0 h-full w-full">
+        <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=2070&auto=format&fit=crop" alt="Food Background" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-black/80"></div> 
+    </div>
+
+    <!-- MAIN CONTENT (Normal Scroll) -->
+    <div id="mainContent" class="relative z-10 w-full min-h-screen hidden opacity-0 transition-opacity duration-1000">
+        
+        <!-- HEADER (Fixed Top) -->
+        <header class="w-full p-4 md:p-6 flex justify-between items-center bg-black/40 backdrop-blur-md border-b border-white/10 sticky top-0 z-30">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="switchView('landing')">
+                <i class="fas fa-leaf text-green-400 text-xl md:text-2xl animate-spin-slow"></i>
+                <h1 class="text-white text-base md:text-2xl font-bold tracking-wider">SustainScan</h1>
+            </div>
+            <div class="flex gap-2 md:gap-4 items-center">
+                <button onclick="openAbout()" class="text-white/80 hover:text-white transition px-3 py-1 md:px-4 md:py-2 rounded-full hover:bg-white/10 border border-white/20 text-xs md:text-sm">
+                    <span class="hidden md:inline"><i class="fas fa-user-circle mr-2"></i>About</span>
+                    <span class="md:hidden"><i class="fas fa-user"></i></span>
+                </button>
+                <button onclick="openLogin()" class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-1.5 md:px-6 md:py-2 rounded-full font-bold shadow-lg hover:shadow-green-500/50 hover:scale-105 transition-all text-xs md:text-sm">
+                    Login
+                </button>
+            </div>
+        </header>
+
+        <!-- PAGE CONTENT (Scrollable) -->
+        <div class="relative w-full min-h-screen pb-20">
+
+            <!-- 1. LANDING PAGE -->
+            <section id="landingView" class="text-center max-w-5xl mx-auto px-4 py-12 md:py-20">
+                <div class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/20 text-[10px] md:text-xs font-bold tracking-widest mb-6">PROJECT 2026</div>
+                <h1 class="text-4xl md:text-7xl font-extrabold leading-tight mb-6 drop-shadow-2xl">
+                    Stop Food Waste.<br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-200">Save The Future.</span>
+                </h1>
+                <p class="text-sm md:text-lg text-gray-300 mb-8 md:mb-10 font-light max-w-xl mx-auto">
+                    A smart auditor for university cafeterias. Log your leftovers, analyze waste patterns, and help us save money & environment.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="openLogin()" class="px-6 py-3 md:px-8 md:py-4 bg-white text-green-900 font-bold text-sm md:text-lg rounded-full hover:shadow-lg hover:scale-105 transition-all">
+                        Get Started
+                    </button>
+                    <button onclick="switchView('howItWorks')" class="px-6 py-3 md:px-8 md:py-4 bg-transparent border border-white text-white font-bold text-sm md:text-lg rounded-full hover:bg-white hover:text-green-900 transition-all">
+                        How It Works
+                    </button>
+                </div>
+            </section>
+
+            <!-- 2. HOW IT WORKS -->
+            <section id="howItWorksView" class="hidden max-w-6xl mx-auto px-4 py-12">
+                <button onclick="switchView('landing')" class="text-white/60 hover:text-white mb-8 flex items-center gap-2 text-sm">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+                <h2 class="text-3xl md:text-4xl font-bold mb-8 md:mb-10 text-center">Why This Matters</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                    <div class="glass-card p-6 rounded-2xl text-center border-t-4 border-red-500">
+                        <div class="text-4xl mb-4">🗑️</div>
+                        <h3 class="font-bold text-xl mb-2">Massive Waste</h3>
+                        <p class="text-sm text-gray-300">Universities throw away tons of food daily because they don't know what students dislike.</p>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl text-center border-t-4 border-yellow-500">
+                        <div class="text-4xl mb-4">💸</div>
+                        <h3 class="font-bold text-xl mb-2">Money Loss</h3>
+                        <p class="text-sm text-gray-300">Every wasted plate is money thrown in trash. This hurts the university budget.</p>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl text-center border-t-4 border-green-500">
+                        <div class="text-4xl mb-4">🌍</div>
+                        <h3 class="font-bold text-xl mb-2">Save The Planet</h3>
+                        <p class="text-sm text-gray-300">Reducing food waste lowers carbon emissions and protects our environment.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card p-8 rounded-3xl border border-white/20">
+                    <h3 class="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center text-green-400">How It Works</h3>
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+                        <div class="text-center">
+                            <div class="w-16 h-16 rounded-full bg-white text-green-900 flex items-center justify-center font-bold text-2xl mx-auto mb-3">1</div>
+                            <h4 class="font-bold">You Report</h4>
+                            <p class="text-xs text-gray-400 mt-2">Log what you didn't eat and why.</p>
+                        </div>
+                        <i class="fas fa-arrow-down md:hidden text-2xl text-gray-600"></i>
+                        <i class="fas fa-arrow-right text-2xl text-gray-600 hidden md:block"></i>
+                        <div class="text-center">
+                            <div class="w-16 h-16 rounded-full bg-white text-green-900 flex items-center justify-center font-bold text-2xl mx-auto mb-3">2</div>
+                            <h4 class="font-bold">We Analyze</h4>
+                            <p class="text-xs text-gray-400 mt-2">AI & Charts track patterns.</p>
+                        </div>
+                        <i class="fas fa-arrow-down md:hidden text-2xl text-gray-600"></i>
+                        <i class="fas fa-arrow-right text-2xl text-gray-600 hidden md:block"></i>
+                        <div class="text-center">
+                            <div class="w-16 h-16 rounded-full bg-white text-green-900 flex items-center justify-center font-bold text-2xl mx-auto mb-3">3</div>
+                            <h4 class="font-bold">We Improve</h4>
+                            <p class="text-xs text-gray-400 mt-2">Chefs change menu to satisfy you.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. ABOUT VIEW -->
+            <section id="aboutView" class="hidden max-w-md mx-auto px-4 py-12">
+                <div class="glass-card p-8 rounded-3xl text-center text-white shadow-2xl relative border border-white/20">
+                    <button onclick="switchView('landing')" class="absolute top-4 left-4 text-white/50 hover:text-white"><i class="fas fa-arrow-left text-xl"></i></button>
+                    <div class="w-24 h-24 bg-gradient-to-br from-green-400 to-emerald-600 rounded-full mx-auto mb-6 flex items-center justify-center shadow-lg ring-4 ring-white/20">
+                        <i class="fas fa-code text-4xl text-white"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold mb-2">About Developer</h2>
+                    <p class="text-green-300 font-medium mb-6">Musab - Front-End Developer</p>
+                    <p class="text-gray-200 text-sm leading-relaxed mb-8">
+                        A passionate developer focused on creating intuitive, high-performance web applications. I believe in solving real-world problems through clean code and modern design.
+                    </p>
+                    <a href="https://musab-009.netlify.app" target="_blank" class="inline-block w-full py-3 rounded-xl bg-white/10 border border-white/30 hover:bg-white hover:text-green-900 transition font-bold">
+                        Visit Portfolio <i class="fas fa-external-link-alt ml-2"></i>
+                    </a>
+                </div>
+            </section>
+
+            <!-- 4. STUDENT DASHBOARD -->
+            <section id="studentView" class="hidden max-w-6xl mx-auto px-4 py-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Form Card -->
+                    <div class="glass-card p-6 md:p-8 rounded-3xl">
+                        <div class="flex justify-between items-center mb-6 md:mb-8">
+                            <div>
+                                <h2 class="text-xl md:text-2xl font-bold text-white">Log Your Plate</h2>
+                                <p class="text-gray-400 text-xs md:text-sm">Student: <span id="studentNameDisplay" class="text-green-400 font-bold">Guest</span></p>
+                            </div>
+                            <button onclick="handleLogout()" class="text-xs md:text-sm text-red-400 hover:text-red-300 border border-red-500/30 px-3 py-1 rounded-full">Exit</button>
+                        </div>
+                        
+                        <form id="wasteForm" class="space-y-5">
+                            <div>
+                                <label class="block text-gray-300 text-xs font-bold uppercase tracking-wider mb-2">Product Name</label>
+                                <input type="text" id="productName" list="suggestions" class="w-full bg-black/20 border border-white/10 text-white p-4 rounded-xl focus:outline-none focus:border-green-500 focus:bg-black/30 transition-all placeholder-gray-500 text-sm" placeholder="e.g. Chicken Biryani" required>
+                                <datalist id="suggestions"></datalist>
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-300 text-xs font-bold uppercase tracking-wider mb-2">Price (PKR)</label>
+                                <input type="number" id="productPrice" class="w-full bg-black/20 border border-white/10 text-white p-4 rounded-xl focus:outline-none focus:border-green-500 focus:bg-black/30 transition-all placeholder-gray-500 text-sm" placeholder="250" required>
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-300 text-xs font-bold uppercase tracking-wider mb-2">Reason</label>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <label class="cursor-pointer"><input type="radio" name="reason" value="Taste" class="peer sr-only" required><div class="reason-select p-3 rounded-xl border border-white/10 text-center text-gray-300 text-sm peer-checked:border-green-500 peer-checked:bg-green-500/20 peer-checked:text-green-400 transition-all hover:bg-white/5">😕 Bad Taste</div></label>
+                                    <label class="cursor-pointer"><input type="radio" name="reason" value="Quantity" class="peer sr-only"><div class="reason-select p-3 rounded-xl border border-white/10 text-center text-gray-300 text-sm peer-checked:border-green-500 peer-checked:bg-green-500/20 peer-checked:text-green-400 transition-all hover:bg-white/5">🍽️ Too Much</div></label>
+                                    <label class="cursor-pointer"><input type="radio" name="reason" value="Cold" class="peer sr-only"><div class="reason-select p-3 rounded-xl border border-white/10 text-center text-gray-300 text-sm peer-checked:border-green-500 peer-checked:bg-green-500/20 peer-checked:text-green-400 transition-all hover:bg-white/5">❄️ Cold</div></label>
+                                    <label class="cursor-pointer"><input type="radio" name="reason" value="Other" class="peer sr-only"><div class="reason-select p-3 rounded-xl border border-white/10 text-center text-gray-300 text-sm peer-checked:border-green-500 peer-checked:bg-green-500/20 peer-checked:text-green-400 transition-all hover:bg-white/5">🤷 Other</div></label>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold shadow-lg hover:shadow-green-500/25 hover:scale-[1.02] transition-all text-sm">
+                                Submit Report
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Stats Card -->
+                    <div class="space-y-6">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="glass-card p-6 rounded-2xl text-center border-l-4 border-green-500">
+                                <p class="text-gray-400 text-xs uppercase font-bold">Loss (PKR)</p>
+                                <h3 class="text-2xl md:text-3xl font-bold text-white">Rs. <span id="totalLossPKR">0</span></h3>
+                            </div>
+                            <div class="glass-card p-6 rounded-2xl text-center border-l-4 border-red-500">
+                                <p class="text-gray-400 text-xs uppercase font-bold">Reports</p>
+                                <h3 class="text-2xl md:text-3xl font-bold text-white" id="reportCount">0</h3>
+                            </div>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl min-h-[300px] md:min-h-[400px]">
+                            <canvas id="wasteChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. ADMIN DASHBOARD -->
+            <section id="adminView" class="hidden max-w-6xl mx-auto px-4 py-8">
+                <div class="flex justify-between items-center mb-6 text-white">
+                    <h2 class="text-xl md:text-2xl font-bold">Admin Control</h2>
+                    <button onclick="handleLogout()" class="text-xs md:text-sm text-red-400 hover:text-red-300 border border-red-500/30 px-3 py-1 rounded-full">Exit</button>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Menu -->
+                    <div class="glass-card p-6 rounded-2xl h-fit order-2 lg:order-1">
+                        <h3 class="text-white font-bold mb-4 border-b border-white/10 pb-2">Menu Items</h3>
+                        <form id="addFoodForm" class="space-y-3 mb-6">
+                            <input type="text" id="newFoodName" placeholder="Item Name" class="w-full bg-black/20 border border-white/10 text-white p-3 rounded-lg text-sm focus:border-green-500 outline-none" required>
+                            <input type="number" id="newFoodCost" placeholder="Price" class="w-full bg-black/20 border border-white/10 text-white p-3 rounded-lg text-sm focus:border-green-500 outline-none" required>
+                            <button class="w-full py-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition text-sm font-bold">+ Add Item</button>
+                        </form>
+                        <div id="menuGrid" class="space-y-2 max-h-48 overflow-y-auto pr-1"></div>
+                    </div>
+
+                    <!-- Logs -->
+                    <div class="glass-card p-6 rounded-2xl lg:col-span-2 order-1 lg:order-2">
+                        <div class="flex flex-col sm:flex-row justify-between items-center mb-4 gap-2">
+                            <h3 class="text-white font-bold">Student Logs</h3>
+                            <input type="text" id="logSearch" onkeyup="filterLogs()" placeholder="Search..." class="bg-black/20 border border-white/10 text-white p-2 rounded-lg text-sm w-full sm:w-40 focus:border-green-500 outline-none">
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-xs md:text-sm text-left text-gray-300">
+                                <thead class="text-xs text-gray-400 uppercase bg-white/5">
+                                    <tr>
+                                        <th class="px-4 py-3">Student</th>
+                                        <th class="px-4 py-3">Phone</th>
+                                        <th class="px-4 py-3">Item</th>
+                                        <th class="px-4 py-3">Price</th>
+                                        <th class="px-4 py-3">Reason</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="logsTableBody" class="divide-y divide-white/10"></tbody>
+                            </table>
+                        </div>
+                        <div class="mt-6 p-4 bg-red-500/10 border border-red-500/30 rounded-xl">
+                            <p class="text-red-300 text-xs font-bold uppercase">Financial Loss</p>
+                            <p class="text-white font-bold text-lg">Rs. <span id="adminLoss">0</span></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="w-full text-center p-4 text-white/30 text-xs font-bold tracking-wider bg-black/20 border-t border-white/5 mt-12">
+            &copy; 2026 Musab's Software. All rights reserved.
+        </footer>
+
+    </div>
+
+    <!-- MODALS -->
+    <div id="loginModal" class="fixed inset-0 z-40 hidden items-center justify-center bg-black/90 backdrop-blur-sm p-4">
+        <div class="bg-white/10 backdrop-blur-xl border border-white/20 p-6 md:p-8 rounded-2xl max-w-sm w-full text-center text-white animate-fade-in-up shadow-2xl">
+            <h2 class="text-xl md:text-2xl font-bold mb-6">Access System</h2>
+            <div class="flex flex-col gap-4">
+                <button onclick="openAuth('student')" class="py-3 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 font-bold hover:shadow-lg hover:scale-[1.02] transition-all text-sm">Student</button>
+                <button onclick="openAuth('admin')" class="py-3 rounded-xl bg-white/10 border border-white/20 font-bold hover:bg-white/20 transition-all text-sm">Admin</button>
+            </div>
+            <button onclick="closeLogin()" class="mt-6 text-xs md:text-sm text-gray-400 hover:text-white">Cancel</button>
+        </div>
+    </div>
+
+    <div id="studentRegModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 backdrop-blur-sm p-4">
+        <div class="bg-white text-gray-900 p-6 md:p-8 rounded-2xl max-w-sm w-full animate-fade-in-up shadow-2xl">
+            <h2 class="text-xl md:text-2xl font-bold mb-4">Welcome Student</h2>
+            <form id="studentForm" class="space-y-4">
+                <input type="text" id="regName" placeholder="Your Name" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-green-500 text-sm" required>
+                <input type="tel" id="regPhone" placeholder="Phone Number" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-green-500 text-sm" required>
+                <button type="submit" class="w-full py-3 bg-gray-900 text-white rounded-xl font-bold hover:bg-gray-800 transition text-sm">Start</button>
+            </form>
+            <button onclick="closeLogin()" class="w-full mt-4 text-xs md:text-sm text-gray-500 hover:text-gray-900">Back</button>
+        </div>
+    </div>
+
+    <div id="adminLoginModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 backdrop-blur-sm p-4">
+        <div class="bg-white text-gray-900 p-6 md:p-8 rounded-2xl max-w-sm w-full animate-fade-in-up shadow-2xl">
+            <h2 class="text-xl md:text-2xl font-bold mb-4">Admin Access</h2>
+            <form id="adminForm" class="space-y-4">
+                <input type="text" id="adminUser" placeholder="Username" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-blue-500 text-sm" required>
+                <input type="password" id="adminPass" placeholder="Password" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-blue-500 text-sm" required>
+                <p>Username: admin</p>
+                <p>Password: 098765</p>
+                <button type="submit" class="w-full py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition text-sm">Login</button>
+            </form>
+            <p id="adminError" class="text-red-500 text-sm text-center hidden mt-2 font-bold">Invalid Credentials</p>
+            <button onclick="closeLogin()" class="w-full mt-4 text-xs md:text-sm text-gray-500 hover:text-gray-900">Back</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
